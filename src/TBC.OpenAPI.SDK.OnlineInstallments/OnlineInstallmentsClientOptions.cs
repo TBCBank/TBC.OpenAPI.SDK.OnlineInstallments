@@ -7,8 +7,7 @@ using TBC.OpenAPI.SDK.Core;
 
 namespace TBC.OpenAPI.SDK.OnlineInstallments
 {
-    public class OnlineInstallmentsClientOptions : OptionsBase
+    public class OnlineInstallmentsClientOptions : BasicAuthOptions
     {
-        public string ClientSecret { get; set; }
     }
 }

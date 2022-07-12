@@ -214,6 +214,10 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
            _http.PostJsonAsync<TokenRequest, TokenResponse>("/oauth/token", new TokenRequest(), null, headers, cancellationToken)
            ).Result;
 
+            if (!responce.IsSuccess)
+                throw new OpenApiException(responce.Problem?.Title ?? "Error Occurred while getting access token", responce.Exception);
+
+
             token = responce?.Data;
 
 
