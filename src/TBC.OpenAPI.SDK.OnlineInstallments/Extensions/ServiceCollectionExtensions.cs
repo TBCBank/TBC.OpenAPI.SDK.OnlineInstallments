@@ -8,7 +8,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddOnlineInstallmentsClient(this IServiceCollection services, OnlineInstallmentsClientOptions options) 
+        public static IServiceCollection AddOnlineInstallmentsClient(this IServiceCollection services, OnlineInstallmentsClientOptions options)
             => AddOnlineInstallmentsClient(services, options, null, null);
 
         public static IServiceCollection AddOnlineInstallmentsClient(this IServiceCollection services, OnlineInstallmentsClientOptions options,

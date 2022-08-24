@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TBC.OpenAPI.SDK.OnlineInstallments.Models.Responses
+﻿namespace TBC.OpenAPI.SDK.OnlineInstallments.Models.Responses
 {
-    public enum ApplicationStatusEnum
+    public enum ApplicationStatuses
     {
-
         /// <summary>
         /// Installment pending for client authentication in TBC Bank
         /// </summary>
@@ -78,7 +71,5 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Models.Responses
         /// Income Document(s) Declined
         /// </summary>
         DocumentDeclined = 13
-
-
     }
 }
