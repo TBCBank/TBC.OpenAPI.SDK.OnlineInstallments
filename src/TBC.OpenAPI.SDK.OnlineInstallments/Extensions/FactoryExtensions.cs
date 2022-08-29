@@ -10,14 +10,13 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Extensions
 
         public static OpenApiClientFactoryBuilder AddOnlineInstallmentsClient(this OpenApiClientFactoryBuilder builder,
             OnlineInstallmentsClientOptions options,
-            Action<HttpClient> configureClient = null,
+            Action<HttpClient> configureClient,
             Func<HttpClientHandler> configureHttpMessageHandler = null)
         {
-            return builder.AddClient<IOnlineInstallmentsClient, OnlineInstallmentsClient, OnlineInstallmentsClientOptions>(options, configureClient, configureHttpMessageHandler);
+            return builder?.AddClient<IOnlineInstallmentsClient, OnlineInstallmentsClient, OnlineInstallmentsClientOptions>(options, configureClient, configureHttpMessageHandler);
         }
 
         public static IOnlineInstallmentsClient GetOnlineInstallmentsClient(this OpenApiClientFactory factory) =>
-            factory.GetOpenApiClient<IOnlineInstallmentsClient>();
-
+            factory?.GetOpenApiClient<IOnlineInstallmentsClient>();
     }
 }
