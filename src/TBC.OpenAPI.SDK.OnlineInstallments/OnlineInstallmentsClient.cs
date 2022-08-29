@@ -146,7 +146,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
             string path, QueryParamCollection query, HeaderParamCollection headers, CancellationToken cancellationToken)
         {
             headers ??= new HeaderParamCollection();
-            headers.Add("Authorization", Token.AccessToken);
+            headers.Add("Authorization", "Bearer " + Token.AccessToken);
 
             var resp = await fn(path, query, headers, cancellationToken)
                 .ConfigureAwait(false);
@@ -154,7 +154,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
             if (resp?.Problem?.Code == "401")
             {
                 UpdateToken(cancellationToken);
-                headers["Authorization"] = Token.AccessToken;
+                headers["Authorization"] = "Bearer " + Token.AccessToken;
                 resp = await fn(path, query, headers, cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -166,7 +166,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
             string path, TData data, QueryParamCollection query, HeaderParamCollection headers, CancellationToken cancellationToken)
         {
             headers ??= new HeaderParamCollection();
-            headers.Add("Authorization", Token.AccessToken);
+            headers.Add("Authorization", "Bearer " + Token.AccessToken);
 
             var resp = await fn(path, data, query, headers, cancellationToken)
                 .ConfigureAwait(false);
@@ -174,7 +174,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
             if (resp?.Problem?.Code == "401")
             {
                 UpdateToken(cancellationToken);
-                headers["Authorization"] = Token.AccessToken;
+                headers["Authorization"] = "Bearer " + Token.AccessToken;
                 resp = await fn(path, data, query, headers, cancellationToken)
                     .ConfigureAwait(false);
             }
