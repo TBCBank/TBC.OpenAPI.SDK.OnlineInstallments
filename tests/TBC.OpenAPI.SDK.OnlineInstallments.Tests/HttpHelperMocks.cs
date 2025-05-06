@@ -2,13 +2,8 @@
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.Globalization;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using TBC.OpenAPI.SDK.OnlineInstallments.Models.Requests;
 using TBC.OpenAPI.SDK.OnlineInstallments.Models.Responses;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -19,22 +14,18 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
     public class HttpHelperMocks
     {
         private readonly WireMockServer _mockServer;
-        private readonly HttpClient _httpClient;
+        private readonly HttpClient _httpClient = new();
 
         public HttpClient HttpClient => _httpClient;
-        public Mock<IOptions<OnlineInstallmentsClientOptions>> OptionsMock = new Mock<IOptions<OnlineInstallmentsClientOptions>>();
+        public Mock<IOptions<OnlineInstallmentsClientOptions>> OptionsMock = new();
 
         public HttpHelperMocks()
         {
             _mockServer = WireMockServer.Start();
-            _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri($"{_mockServer.Urls[0]}/");
-
-
 
             AddMocks();
         }
-
 
         private void AddMocks()
         {
@@ -94,7 +85,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
                             Amount = 1,
                             ContributionAmount = "1",
                             Description = "Test description",
-                            StatusId = ApplicationStatusEnum.Approved
+                            StatusId = ApplicationStatuses.Approved
                         })
                 );
 
@@ -132,7 +123,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
                                 {
                                     StatusId = 1,
                                     SessionId ="aeb32470-4999-4f05-b271-b393325c8d8f",
-                                    ChangeDate = new DateTime(1991,07,22).ToString(),
+                                    ChangeDate = new DateTime(1991,07,22).ToString(CultureInfo.InvariantCulture),
                                     StatusDescription = "Test description"
                                 }
                             },
@@ -166,17 +157,15 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
                         .WithStatusCode(200)
                         .WithBodyAsJson(new TokenResponse
                         {
-                            Access_Token = Guid.NewGuid().ToString(),
-                            Expires_In = DateTime.Now.ToString(),
-                            Issued_At = DateTime.Now.ToString(),
+                            AccessToken = Guid.NewGuid().ToString(),
+                            ExpiresIn = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                            IssuedAt = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                             Scope = "Test Scope",
-                            Token_Type = "Test Type"
+                            TokenType = "Test Type"
                         })
                 );
 
-            #endregion
-
-
+            #endregion OkResults
         }
     }
 }
