@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "CoreApiAppExmaple": {
+    "CoreApiAppExample": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

@@ -2,13 +2,7 @@
 using Moq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using TBC.OpenAPI.SDK.OnlineInstallments.Models.Requests;
 using TBC.OpenAPI.SDK.OnlineInstallments.Models.Responses;
 using WireMock.RequestBuilders;
 using WireMock.ResponseBuilders;
@@ -30,11 +24,8 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri($"{_mockServer.Urls[0]}/");
 
-
-
             AddMocks();
         }
-
 
         private void AddMocks()
         {
@@ -57,7 +48,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
                 .RespondWith(
                     Response.Create()
                         .WithStatusCode(200)
-                        .WithBodyAsJson(new InitiateInstallmentResponce
+                        .WithBodyAsJson(new InitiateInstallmentResponse
                         {
                             SessionId = Guid.NewGuid().ToString(),
                         })
@@ -94,7 +85,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
                             Amount = 1,
                             ContributionAmount = "1",
                             Description = "Test description",
-                            StatusId = ApplicationStatusEnum.Approved
+                            StatusId = ApplicationStatuses.Approved
                         })
                 );
 
@@ -175,8 +166,6 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
                 );
 
             #endregion
-
-
         }
     }
 }

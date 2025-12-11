@@ -1,14 +1,10 @@
-﻿using FluentAssertions;
-using FluentAssertions.Collections;
-using Moq;
+﻿using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using TBC.OpenAPI.SDK.Core;
-using TBC.OpenAPI.SDK.Core.Exceptions;
 using TBC.OpenAPI.SDK.OnlineInstallments.Models.Requests;
 using TBC.OpenAPI.SDK.OnlineInstallments.Models.Responses;
 using Xunit;
@@ -29,11 +25,10 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
             _client = new OnlineInstallmentsClient(http, _helperMocks.OptionsMock.Object);
         }
 
-
         #region OkResults
 
         [Fact]
-        public async Task InitiateOnlineInstallment_WhenResponceOk_ReturnsData()
+        public async Task InitiateOnlineInstallment_WhenResponseOk_ReturnsData()
         {
             var result = await _client.InitiateOnlineInstallment(new InitiateInstallmentRequest
             {
@@ -52,14 +47,12 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
                 }
             });
 
-
             Assert.NotNull(result);
             Assert.True(!string.IsNullOrEmpty(result.SessionId));
         }
 
-
         [Fact]
-        public async Task ConfirmApplication_WhenResponceOk_ReturnsData()
+        public async Task ConfirmApplication_WhenResponseOk_ReturnsData()
         {
             var result = await _client.ConfirmApplication(new ConfirmApplicationRequest
             {
@@ -67,29 +60,26 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
                 SessionId = "181b867a-1feb-42f9-be34-e8de29810f13"
             });
 
-
             Assert.NotNull(result);
             Assert.True(!string.IsNullOrEmpty(result.Id));
         }
 
         [Fact]
-        public async Task GetApplicationStatus_WhenResponceOk_ReturnsData()
+        public async Task GetApplicationStatus_WhenResponseOk_ReturnsData()
         {
             var expected = new GetApplicationStatusResponse
             {
                 Amount = 1,
                 ContributionAmount = "1",
                 Description = "Test description",
-                StatusId = ApplicationStatusEnum.Approved
+                StatusId = ApplicationStatuses.Approved
             };
-
 
             var result = await _client.GetApplicationStatus(new GetApplicationStatusRequest
             {
                 MerchantKey = "a60452bf-4a7f-4b52-892a-68b4aad3f1f7",
                 SessionId = "181b867a-1feb-42f9-be34-e8de29810f13"
             });
-
 
             Assert.NotNull(result);
             Assert.Equal(expected.Amount, result.Amount);
@@ -101,18 +91,15 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
         [Fact]
         public async Task GetApplicationStatus_CancelApplication_ReturnsData()
         {
-
             var result = await _client.CancelApplication(new CancelApplicationRequest
             {
                 MerchantKey = "a60452bf-4a7f-4b52-892a-68b4aad3f1f7",
                 SessionId = "181b867a-1feb-42f9-be34-e8de29810f13"
             });
 
-
             Assert.NotNull(result);
             Assert.True(!string.IsNullOrEmpty(result.Id));
         }
-
 
         [Fact]
         public async Task GetApplicationStatus_GetMerchantApplicationStatusesReturnsData()
@@ -134,24 +121,19 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Tests
                             }
             };
 
-
             var result = await _client.GetMerchantApplicationStatuses(new MerchantApplicationStatusRequest
             {
                 MerchantKey = "a60452bf-4a7f-4b52-892a-68b4aad3f1f7",
                 Take = 1
             });
 
-
             Assert.NotNull(result);
             Assert.Equal(result.SynchronizationRequestId, expected.SynchronizationRequestId);
             Assert.Equal(result.TotalCount, expected.TotalCount);
             //Assert.Equal(result.StatusChanges, expected.StatusChanges);
             result.StatusChanges.SequenceEqual(expected.StatusChanges);
-            
         }
 
         #endregion
-
-
     }
 }

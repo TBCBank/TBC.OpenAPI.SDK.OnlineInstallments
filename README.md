@@ -143,7 +143,7 @@ For more details see examples in repo:
 ​
 ​
 
-[CoreApiAppExmaple](https://github.com/TBCBank/TBC.OpenAPI.SDK.OnlineInstallments/tree/master/examples/CoreApiAppExmaple)
+[CoreApiAppExample](https://github.com/TBCBank/TBC.OpenAPI.SDK.OnlineInstallments/tree/master/examples/CoreApiAppExample)
 ​
 
 [CoreConsoleAppExample](https://github.com/TBCBank/TBC.OpenAPI.SDK.OnlineInstallments/tree/master/examples/CoreConsoleAppExample)

@@ -9,8 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 builder.Services.AddOnlineInstallmentsClient(builder.Configuration.GetSection("OnlineInstallments").Get<OnlineInstallmentsClientOptions>());
+builder.Services.Configure<OnlineInstallmentsClientOptions>(builder.Configuration.GetSection("OnlineInstallments"));
 
 var app = builder.Build();
 

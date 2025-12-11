@@ -3,7 +3,7 @@ using TBC.OpenAPI.SDK.OnlineInstallments.Interfaces;
 using TBC.OpenAPI.SDK.OnlineInstallments.Models.Requests;
 using TBC.OpenAPI.SDK.OnlineInstallments.Models.Responses;
 
-namespace CoreApiAppExmaple.Controllers
+namespace CoreApiAppExample.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -17,9 +17,9 @@ namespace CoreApiAppExmaple.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<GetApplicationStatusResponse>> GetApplicationStatus(GetApplicationStatusRequest model, CancellationToken cancellationToken = default)
+        public async Task<ActionResult<GetApplicationStatusResponse>> GetApplicationStatus([FromQuery] string sessionId, [FromHeader] string merchantKey, CancellationToken cancellationToken = default)
         {
-            var result = await _onlineInstallmentsClient.GetApplicationStatus(model, cancellationToken);
+            var result = await _onlineInstallmentsClient.GetApplicationStatus(new GetApplicationStatusRequest { SessionId = sessionId, MerchantKey = merchantKey }, cancellationToken);
 
             return Ok(result);
         }

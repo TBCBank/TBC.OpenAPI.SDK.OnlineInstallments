@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Mvc;
-using TBC.OpenAPI.SDK.OnlineInstallments.Models.Requests;
 using TBC.OpenAPI.SDK.Core;
 using TBC.OpenAPI.SDK.OnlineInstallments.Extensions;
+using TBC.OpenAPI.SDK.OnlineInstallments.Models.Requests;
 
 namespace NetFrameworkExample.Controllers
 {
