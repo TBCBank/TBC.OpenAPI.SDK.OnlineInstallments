@@ -18,6 +18,5 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments.Extensions
 
         public static IOnlineInstallmentsClient GetOnlineInstallmentsClient(this OpenApiClientFactory factory) =>
             factory.GetOpenApiClient<IOnlineInstallmentsClient>();
-
     }
 }

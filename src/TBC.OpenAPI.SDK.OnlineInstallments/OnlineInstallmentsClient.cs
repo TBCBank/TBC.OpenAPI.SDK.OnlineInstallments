@@ -1,14 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TBC.OpenAPI.SDK.Core;
 using TBC.OpenAPI.SDK.Core.Exceptions;
 using TBC.OpenAPI.SDK.Core.Models;
 using TBC.OpenAPI.SDK.OnlineInstallments.Interfaces;
-using TBC.OpenAPI.SDK.OnlineInstallments.Models;
 using TBC.OpenAPI.SDK.OnlineInstallments.Models.Requests;
 using TBC.OpenAPI.SDK.OnlineInstallments.Models.Responses;
 
@@ -28,11 +22,10 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
             UpdateToken(CancellationToken.None);
         }
 
-
-        public async Task<InitiateInstallmentResponce> InitiateOnlineInstallment(InitiateInstallmentRequest model, CancellationToken cancellationToken = default)
+        public async Task<InitiateInstallmentResponse> InitiateOnlineInstallment(InitiateInstallmentRequest model, CancellationToken cancellationToken = default)
         {
-            var result = await CallPost<InitiateInstallmentRequest, InitiateInstallmentResponce>(
-                _http.PostJsonAsync<InitiateInstallmentRequest, InitiateInstallmentResponce>,
+            var result = await CallPost<InitiateInstallmentRequest, InitiateInstallmentResponse>(
+                _http.PostJsonAsync<InitiateInstallmentRequest, InitiateInstallmentResponse>,
                 "/applications",
                 model,
                 null,
@@ -57,7 +50,6 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
                 null, cancellationToken
                 ).ConfigureAwait(false);
 
-
             var result = await CallPost<ConfirmApplicationRequest, ConfirmApplicationResponse>(
                _http.PostJsonAsync<ConfirmApplicationRequest, ConfirmApplicationResponse>,
                $"/applications/{model.SessionId}/confirm",
@@ -73,7 +65,6 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
 
             return result.Data;
         }
-
 
         public async Task<GetApplicationStatusResponse> GetApplicationStatus(GetApplicationStatusRequest model, CancellationToken cancellationToken = default)
         {
@@ -95,7 +86,6 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
 
             return result.Data;
         }
-
 
         public async Task<CancelApplicationResponse> CancelApplication(CancelApplicationRequest model, CancellationToken cancellationToken = default)
         {
@@ -137,10 +127,8 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
             return result.Data;
         }
 
-
         public async Task MerchantApplicationStatusSync(MerchantApplicationStatusSyncRequest model, CancellationToken cancellationToken = default)
         {
-
             var result = await CallPost<MerchantApplicationStatusSyncRequest, string>(
               _http.PostJsonAsync<MerchantApplicationStatusSyncRequest, string>,
               $"/merchant/applications/status-changes-sync",
@@ -153,9 +141,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
 
             if (!result.IsSuccess)
                 throw new OpenApiException(result.Problem?.Title ?? "Unexpected error occurred", result.Exception);
-
         }
-
 
         private async Task<ApiResponse<TResult>> CallGet<TResult>(Func<string, QueryParamCollection, HeaderParamCollection, CancellationToken, Task<ApiResponse<TResult>>> fn,
             string path, QueryParamCollection query, HeaderParamCollection headers, CancellationToken cancellationToken)
@@ -174,15 +160,12 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
                     .ConfigureAwait(false);
             }
 
-
             return resp;
-
         }
 
         private async Task<ApiResponse<TResult>> CallPost<TData, TResult>(Func<string, TData, QueryParamCollection, HeaderParamCollection, CancellationToken, Task<ApiResponse<TResult>>> fn,
             string path, TData data, QueryParamCollection query, HeaderParamCollection headers, CancellationToken cancellationToken)
         {
-
             headers = headers ?? new HeaderParamCollection();
             headers.Add("Authorization", token.Access_Token);
 
@@ -197,9 +180,7 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
                     .ConfigureAwait(false);
             }
 
-
             return resp;
-
         }
 
         private void UpdateToken(CancellationToken cancellationToken)
@@ -209,18 +190,14 @@ namespace TBC.OpenAPI.SDK.OnlineInstallments
                 {"client_secret", $"{_options.ClientSecret}"}
             };
 
-
-            var responce = Task.Run(() =>
+            var response = Task.Run(() =>
            _http.PostJsonAsync<TokenRequest, TokenResponse>("/oauth/token", new TokenRequest(), null, headers, cancellationToken)
            ).Result;
 
-            if (!responce.IsSuccess)
-                throw new OpenApiException(responce.Problem?.Title ?? "Error Occurred while getting access token", responce.Exception);
+            if (!response.IsSuccess)
+                throw new OpenApiException(response.Problem?.Title ?? "Error Occurred while getting access token", response.Exception);
 
-
-            token = responce?.Data;
-
-
+            token = response?.Data;
         }
     }
 }
